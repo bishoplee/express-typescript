@@ -1,7 +1,9 @@
 import express from "express";
 import os from "node:os";
 
-import config, { PORT, HOST } from "./config";
+import config from "./config";
+import apiRouter from "./api-router";
+import serverRender from "./render";
 
 const server = express();
 
@@ -11,15 +13,23 @@ server.use(express.static("dist"));
 // templating engine
 server.set("view engine", "ejs");
 
-server.use("/", (req, res) => {
+server.use("/api", apiRouter)
+
+server.get("/", async (req, res) => {
+  /* res.render("index", {
+    initialContent: "<div class='center'><strong>Loading...</strong></div>"
+  }); */
+  const { initialMarkup, initialData } = await serverRender();
+
   res.render("index", {
-    initialContent: "Loading..."
+    initialMarkup,
+    initialData,
   });
 });
 
 server.listen(config.PORT, config.HOST, () => {
   console.info(
-    `Express server is listening at ${config.SERVER_URL}`,
+    `\n Express server is listening at ${config.SERVER_URL}\n`,
     `Free Memory: ${os.freemem() / 1024 / 1024}`
   )
 })
