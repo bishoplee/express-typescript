@@ -41,22 +41,39 @@ body {
   color: #0000ee;
 }
 
+.link:hover .contest {
+  background: #efeeff;
+}
+
 .contest-preview {
   margin: 1rem;
   border: thin solid #ccc;
 }
 
+.contest-preview, .contest {
+  border-radius: 5px;
+}
+
 .contest-preview .category {
   border-bottom: thin solid #ccc;
-  padding: 0.5rem;
+  padding: 0.5rem .95rem;
   font-weight: bold;
   color: #333;
   background-color: #eee;
+  letter-spacing: .05rem;
+  font-size: .95rem;
 }
 
 .contest-preview .contest {
   color: #333;
-  padding: 0.5rem;
+  padding: 0.95rem;
+  font-size: .85rem;
+  letter-spacing: .05rem;
+}
+
+.contest-preview .category, .contest .title {
+  border-radius: 4px 4px 0 0;
+
 }
 
 .contest .title {
