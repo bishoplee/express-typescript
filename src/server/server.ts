@@ -7,20 +7,14 @@ import serverRender from "./render";
 
 const server = express();
 
-// static resources folder
 server.use(express.static("dist"));
 
-// templating engine
 server.set("view engine", "ejs");
 
-server.use("/api", apiRouter)
+server.use("/api", apiRouter);
 
-server.get("/", async (req, res) => {
-  /* res.render("index", {
-    initialContent: "<div class='center'><strong>Loading...</strong></div>"
-  }); */
-  const { initialMarkup, initialData } = await serverRender();
-
+server.get(["/", "/contest/:contestId"], async (req, res) => {
+  const { initialMarkup, initialData } = await serverRender(req);
   res.render("index", {
     initialMarkup,
     initialData,
@@ -28,8 +22,8 @@ server.get("/", async (req, res) => {
 });
 
 server.listen(config.PORT, config.HOST, () => {
-  console.info(
-    `\n Express server is listening at ${config.SERVER_URL}\n`,
-    `Free Memory: ${os.freemem() / 1024 / 1024}`
-  )
-})
+  console.log(
+    `Express is listening at ${config.SERVER_URL}`,
+    `Free Mem: ${os.freemem() / 1024 / 1024}`,
+  );
+});
